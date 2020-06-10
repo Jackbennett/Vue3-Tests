@@ -1,5 +1,6 @@
 import {reactive, readonly, watch, ref, Ref} from 'vue';
 import {set, get} from 'idb-keyval'
+import { cloneDeep } from 'lodash-es'
 
 
 export abstract class Store<T extends Object> {
@@ -30,9 +31,9 @@ export abstract class PersistentStore<T extends Object> extends Store<T> {
         if(this.isInitialized) {
             let stateFromIndexedDB: string = await get(this.storeName);
             if(stateFromIndexedDB) {
-                Object.assign(this.state, JSON.parse(stateFromIndexedDB))
+                Object.assign(this.state, stateFromIndexedDB)
             }
-            watch(() => this.state, (val) => set(this.storeName, JSON.stringify(val)), {deep: true})
+            watch(() => this.state, (val) => set(this.storeName, cloneDeep(val)), {deep: true})
 
             this.isInitialized.value = true;
         }

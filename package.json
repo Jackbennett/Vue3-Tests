@@ -7,6 +7,7 @@
     "run-server": "webpack-dev-server"
   },
   "dependencies": {
+    "lodash-es": "^4.17.15",
     "vue": "^3.0.0-alpha.1"
   },
   "devDependencies": {
